@@ -1,0 +1,30 @@
+{
+  "name": "chatsy",
+  "version": "0.0.1",
+  "description": "A free no-code conversational AI chatbot. Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "npm run prepare && ./node_modules/mocha/bin/mocha test/ --recursive --timeout=10000",
+    "prepare": "node -e 'require(`prepare-package`)()'"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chatsy-ai/chatsy"
+  },
+  "keywords": [
+    "chatsy"
+  ],
+  "author": "ITW Creative Works",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chatsy-ai/chatsy/issues"
+  },
+  "homepage": "https://chatsy.ai",
+  "devDependencies": {
+    "mocha": "^8.4.0",
+    "prepare-package": "^0.0.16"
+  }
+}
