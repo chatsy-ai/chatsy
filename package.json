@@ -1,6 +1,6 @@
 {
   "name": "chatsy",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A free no-code conversational AI chatbot. Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!",
   "main": "./dist/index.js",
   "scripts": {
