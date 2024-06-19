@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://cdn.itwcreativeworks.com/assets/itw-creative-works/images/logo/itw-creative-works-brandmark-black-x.svg">
+  <a href="https://chatsy.ai">
     <img src="https://cdn.itwcreativeworks.com/assets/itw-creative-works/images/logo/itw-creative-works-brandmark-black-x.svg" width="100px">
   </a>
 </p>
@@ -24,17 +24,17 @@
   <strong>chatsy</strong> is the official npm module of <a href="https://chatsy.ai">Chatsy</a>, a free no-code conversational AI chatbot. Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!
 </p>
 
-## Chatsy Works in Node AND browser environments
+## 🌐 Chatsy Works in Node AND browser environments
 Yes, this module works in both Node and browser environments, including compatibility with [Webpack](https://www.npmjs.com/package/webpack) and [Browserify](https://www.npmjs.com/package/browserify)!
 
-## Features
+## 🦄 Features
 * Getting proxy lists
 
-### Getting an API key
-You can use so much of `chatsy` for free, but if you want to do some advanced stuff, you'll need an API key. You can get one by [signing up for a Chatsy account](https://chatsy.ai/authentication/signup).
+### 🔑 Getting an API key
+You can use so much of `chatsy` for free, but if you want to do some advanced stuff, you'll need an API key. You can get one by [signing up for a Chatsy account](https://chatsy.ai/signup).
 
-## Install Chatsy
-### Install via npm
+## 📦 Install Chatsy
+### Option 1: Install via npm
 Install with npm if you plan to use `chatsy` in a Node project or in the browser.
 ```shell
 npm install chatsy
@@ -48,7 +48,7 @@ const chatsy = new (require('chatsy'))({
 });
 ```
 
-### Install via CDN
+### Option 2: Install via CDN
 Install with CDN if you plan to use Chatsy only in a browser environment.
 ```html
 <script data-account-id="yourAccountId" data-chat-id="yourChatId" src="https://app.chatsy.ai/resources/script.js"></script>
@@ -57,19 +57,19 @@ Install with CDN if you plan to use Chatsy only in a browser environment.
 </script>
 ```
 
-## Using Chatsy
-After you have followed the install step, you can start using `chatsy`. 
+## ⚡️ Using Chatsy
+After you have followed the install step, you can start using `chatsy`.
 
 For a more in-depth documentation of this library and the Chatsy service, please visit the official Chatsy website.
 
-## What Can Chatsy do?
+## 📝 What Can Chatsy do?
 Chatsy is a a [free no-code conversational AI chatbot](https://chatsy.ai). Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!
 
-## Final Words
+## 🗨️ Final Words
 If you are still having difficulty, we would love for you to post
 a question to [the Chatsy issues page](https://github.com/chatsy-ai/chatsy/issues). It is much easier to answer questions that include your code and relevant files! So if you can provide them, we'd be extremely grateful (and more likely to help you find the answer!)
 
-## Projects Using this Library
+## 📚 Projects Using this Library
 * coming soon!
 
 Ask us to have your project listed! :)
