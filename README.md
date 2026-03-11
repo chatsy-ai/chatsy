@@ -1,75 +1,159 @@
 <p align="center">
   <a href="https://chatsy.ai">
-    <img src="https://cdn.itwcreativeworks.com/assets/itw-creative-works/images/logo/itw-creative-works-brandmark-black-x.svg" width="100px">
+    <img src="https://cdn.itwcreativeworks.com/assets/chatsy/images/socials/chatsy-brandmark-square-black-1024x1024.png" width="100px">
   </a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/github/package-json/v/chatsy-ai/chatsy.svg">
-  <br>
-  <img src="https://img.shields.io/librariesio/release/npm/chatsy.svg">
   <img src="https://img.shields.io/bundlephobia/min/chatsy.svg">
-  <img src="https://img.shields.io/codeclimate/maintainability-percentage/chatsy-ai/chatsy.svg">
   <img src="https://img.shields.io/npm/dm/chatsy.svg">
   <img src="https://img.shields.io/node/v/chatsy.svg">
-  <img src="https://img.shields.io/website/https/chatsy.ai.svg">
   <img src="https://img.shields.io/github/license/chatsy-ai/chatsy.svg">
-  <img src="https://img.shields.io/github/contributors/chatsy-ai/chatsy.svg">
-  <img src="https://img.shields.io/github/last-commit/chatsy-ai/chatsy.svg">
   <br>
   <br>
   <a href="https://chatsy.ai">Site</a> | <a href="https://www.npmjs.com/package/chatsy">NPM Module</a> | <a href="https://github.com/chatsy-ai/chatsy">GitHub Repo</a>
   <br>
   <br>
-  <strong>chatsy</strong> is the official npm module of <a href="https://chatsy.ai">Chatsy</a>, a free no-code conversational AI chatbot. Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!
+  <strong>Chatsy</strong> is an embeddable AI chatbot widget. Add intelligent customer support to any website with one line of code.
 </p>
 
-## 🌐 Chatsy Works in Node AND browser environments
-Yes, this module works in both Node and browser environments, including compatibility with [Webpack](https://www.npmjs.com/package/webpack) and [Browserify](https://www.npmjs.com/package/browserify)!
+## Quick Start
 
-## 🦄 Features
-* Getting proxy lists
+### 1. Create an Agent
 
-### 🔑 Getting an API key
-You can use so much of `chatsy` for free, but if you want to do some advanced stuff, you'll need an API key. You can get one by [signing up for a Chatsy account](https://chatsy.ai/signup).
+Go to [chatsy.ai/dashboard/agents/new](https://chatsy.ai/dashboard/agents/new) to create your AI agent. Configure your brand info, knowledge base, response style, and welcome message. Copy the **Agent ID** when you're done.
 
-## 📦 Install Chatsy
-### Option 1: Install via npm
-Install with npm if you plan to use `chatsy` in a Node project or in the browser.
-```shell
+### 2. Add to Your Website
+
+**Script tag** (no build tools needed):
+
+```html
+<script
+  src="https://cdn.jsdelivr.net/npm/chatsy@latest/dist/chatsy.min.js"
+  data-agent-id="YOUR_AGENT_ID"
+></script>
+```
+
+A chat button appears in the bottom-right corner. Click it to open the chat.
+
+**NPM** (for React, Vue, Next.js, etc.):
+
+```
 npm install chatsy
 ```
-If you plan to use `chatsy` in a browser environment, you will probably need to use [Webpack](https://www.npmjs.com/package/webpack), [Browserify](https://www.npmjs.com/package/browserify), or a similar service to compile it.
 
 ```js
-const chatsy = new (require('chatsy'))({
-  // Not required, but having one removes limits (get your key at https://chatsy.ai).
-  apiKey: 'api_test_key'
+import Chatsy from 'chatsy';
+
+const chat = new Chatsy('YOUR_AGENT_ID');
+```
+
+## Configuration
+
+### Script Tag Attributes
+
+| Attribute | Default | Description |
+|-----------|---------|-------------|
+| `data-agent-id` | *required* | Your agent ID from the dashboard |
+| `data-button-background-color` | `#297bf7` | Button background color |
+| `data-button-text-color` | `#FFFFFF` | Button icon color |
+| `data-button-position` | `bottom-right` | `bottom-right` or `bottom-left` |
+| `data-button-type` | `round` | Button shape: `round` or `square` |
+| `data-button-icon` | `default` | Icon style: `default`, `material`, or `rounded` |
+| `data-end-user-id` | *auto-generated* | Unique ID for the end user |
+
+### JavaScript Options
+
+```js
+const chat = new Chatsy('YOUR_AGENT_ID', {
+  settings: {
+    button: {
+      backgroundColor: '#297bf7', // Button background color
+      textColor: '#FFFFFF',       // Button icon color
+      position: 'bottom-right',   // 'bottom-right' or 'bottom-left'
+      type: 'round',              // 'round' or 'square'
+      icon: 'default',            // 'default', 'material', or 'rounded'
+    },
+  },
+  endUserId: 'user-123',          // Optional: identify the end user
 });
 ```
 
-### Option 2: Install via CDN
-Install with CDN if you plan to use Chatsy only in a browser environment.
-```html
-<script data-account-id="yourAccountId" data-chat-id="yourChatId" src="https://app.chatsy.ai/resources/script.js"></script>
-<script type="text/javascript">
-  chatsy.open();
-</script>
+## API
+
+### Methods
+
+| Method | Description |
+|--------|-------------|
+| `chat.open()` | Open the chat window |
+| `chat.close()` | Close the chat window |
+| `chat.toggle()` | Toggle open/close |
+| `chat.send('Hello!')` | Send a message programmatically |
+| `chat.getMessages()` | Get all messages as an array |
+| `chat.destroy()` | Remove the widget from the page |
+
+### Events
+
+```js
+chat.on('ready', () => { /* Widget loaded */ });
+chat.on('open', () => { /* Chat opened */ });
+chat.on('close', () => { /* Chat closed */ });
+chat.on('message', (msg) => { /* New message received */ });
+chat.on('error', (err) => { /* Error occurred */ });
 ```
 
-## ⚡️ Using Chatsy
-After you have followed the install step, you can start using `chatsy`.
+### Multiple Instances
 
-For a more in-depth documentation of this library and the Chatsy service, please visit the official Chatsy website.
+Each instance is independent, so you can run multiple widgets on the same page:
 
-## 📝 What Can Chatsy do?
-Chatsy is a a [free no-code conversational AI chatbot](https://chatsy.ai). Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!
+```js
+const support = new Chatsy('support-agent-id');
+const sales = new Chatsy('sales-agent-id', {
+  settings: { button: { position: 'bottom-left', backgroundColor: '#10B981' } },
+});
+```
 
-## 🗨️ Final Words
-If you are still having difficulty, we would love for you to post
-a question to [the Chatsy issues page](https://github.com/chatsy-ai/chatsy/issues). It is much easier to answer questions that include your code and relevant files! So if you can provide them, we'd be extremely grateful (and more likely to help you find the answer!)
+## How It Works
 
-## 📚 Projects Using this Library
-* coming soon!
+1. A floating chat button is injected into your page (a regular DOM element, not an iframe)
+2. Clicking it lazily creates an iframe with the chat interface (no impact on initial page load)
+3. Messages are sent to your AI agent via the Chatsy API
+4. The agent responds based on your configured knowledge base, brand info, and instructions
 
-Ask us to have your project listed! :)
+## Agent Configuration
+
+Configure your agent at [chatsy.ai/dashboard](https://chatsy.ai/dashboard):
+
+| Setting | What It Does |
+|---------|-------------|
+| **Brand info** | Company name, website, phone, description |
+| **Knowledge base** | Products, services, and additional context the agent should know |
+| **Processes** | Cancellation, refund, return, and shipping policies |
+| **Response style** | Tone (professional, friendly, casual) and custom instructions |
+| **Welcome message** | First message visitors see when opening chat |
+| **AI model** | Standard (GPT-4o Mini) or Advanced (GPT-4o) |
+
+## Development
+
+```bash
+npm start        # Watch mode - rebuilds on file changes
+npm run build    # One-time build (ESM, CJS, UMD)
+npm test         # Run tests
+```
+
+### Build Outputs
+
+| File | Format | Use Case |
+|------|--------|----------|
+| `dist/index.mjs` | ESM | `import` in modern bundlers (webpack, Vite, etc.) |
+| `dist/index.js` | CJS | `require()` in Node.js |
+| `dist/chatsy.min.js` | IIFE (minified) | `<script>` tag / CDN |
+
+### Local Testing
+
+Open `test/browser.html` in your browser to test the widget. Set the `data-api-url` attribute to point to your local backend if needed.
+
+## License
+
+MIT

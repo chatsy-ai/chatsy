@@ -1,22 +1,38 @@
 {
   "name": "chatsy",
-  "version": "1.0.1",
-  "description": "A free no-code conversational AI chatbot. Automate customer support and increase sales in 5 minutes with the Chatsy 24/7 chatbot—no coding required!",
+  "version": "2.0.0",
+  "description": "Embeddable AI chatbot widget. Add a chat widget to any website with one line of code.",
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "npm run prepare && ./node_modules/mocha/bin/mocha test/ --recursive --timeout=10000",
-    "prepare": "node -e \"require('prepare-package')()\"",
-    "prepare:watch": "nodemon -w ./src -e '*' --exec 'npm run prepare'"
+    "start": "node build.js --watch",
+    "build": "node build.js",
+    "prepare": "npm run build",
+    "test": "npm run build && mocha test/ --recursive --timeout=10000"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chatsy-ai/chatsy"
   },
   "keywords": [
-    "chatsy"
+    "chatsy",
+    "chatbot",
+    "chat-widget",
+    "ai-chatbot",
+    "customer-support",
+    "embeddable-chat"
   ],
   "author": "ITW Creative Works",
   "license": "MIT",
@@ -24,16 +40,8 @@
     "url": "https://github.com/chatsy-ai/chatsy/issues"
   },
   "homepage": "https://chatsy.ai",
-  "preparePackage": {
-    "input": "./src",
-    "output": "./dist",
-    "replace": {}
-  },
-  "dependencies": {
-    "itwcw-package-analytics": "^1.0.4"
-  },
   "devDependencies": {
-    "mocha": "^8.4.0",
-    "prepare-package": "^1.1.12"
+    "esbuild": "^0.27.3",
+    "mocha": "^11.7.5"
   }
 }
