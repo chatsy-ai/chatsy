@@ -1,6 +1,8 @@
 export const VERSION = '{version}';
 export const IS_BROWSER = typeof window !== 'undefined' && typeof document !== 'undefined';
 
+export const API_URL = 'https://chatsy.ai';
+
 export const DEFAULTS = {
   settings: {
     button: {
@@ -11,8 +13,8 @@ export const DEFAULTS = {
       icon: 'default',
     },
   },
-  endUserId: '',
-  apiUrl: 'https://chatsy.ai',
+  user: {},
+  context: {},
 };
 
 // Chat button SVG icon variations

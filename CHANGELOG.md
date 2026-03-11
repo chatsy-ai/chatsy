@@ -15,6 +15,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `Security` in case of vulnerabilities.
 
 ---
-## [1.0.0] - 2024-06-19
+## [2.0.4] - 2026-03-11
+### BREAKING
+- Replaced `endUserId` option with rich `user` object (`id`, `firstName`, `lastName`, `email`, `photoURL`, plus arbitrary fields)
+- Removed `data-end-user-id` and `data-api-url` script tag attributes from CDN auto-init
+- Renamed `apiUrl` option to `_embedUrl` (internal/private)
+
+### Added
+- `user` option for passing user identity (id, name, email, photo, custom fields)
+- `context` option for page metadata and tags
+- `setUser()` method for updating user identity after initialization (e.g., post-login)
+- Auto-collection of `page.url`, `page.referrer`, `page.title` into context
+- Handle `chatsy:close` postMessage from embed (allows embed to request widget close)
+- `API_URL` constant extracted as single source of truth
+
+### Changed
+- `chatsy:init` payload now sends `user` and `context` instead of `endUserId`
+- Origin validation and iframe URL use `API_URL` constant with `_embedUrl` override
+- README updated with new user/context configuration and `setUser()` documentation
+
+---
+## [2.0.0] - 2024-06-19
 ### Added
 - Initial release of the project 🚀

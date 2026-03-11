@@ -1,3 +1,4 @@
+import { API_URL } from './constants.js';
 import { log, logError } from './utils.js';
 import { postToIframe } from './iframe.js';
 
@@ -18,7 +19,7 @@ export function onMessage(instance, event) {
   }
 
   // Origin validation (skip for localhost in dev)
-  const expectedOrigin = new URL(instance._options.apiUrl).origin;
+  const expectedOrigin = new URL(instance._options._embedUrl || API_URL).origin;
   if (event.origin !== expectedOrigin && !event.origin.startsWith('http://localhost')) {
     return;
   }
@@ -34,8 +35,9 @@ export function onMessage(instance, event) {
       // Send init config to iframe
       postToIframe(instance, 'chatsy:init', {
         agentId: instance._agentId,
-        endUserId: instance._options.endUserId,
         settings: instance._options.settings,
+        user: instance._options.user,
+        context: instance._options.context,
       });
       emit(instance, 'ready');
 
@@ -56,6 +58,11 @@ export function onMessage(instance, event) {
       }
       log('Received message from iframe:', payload.message?.content);
       emit(instance, 'message', payload.message);
+      break;
+
+    case 'chatsy:close':
+      log('Close requested by embed');
+      instance.close();
       break;
 
     case 'chatsy:state':

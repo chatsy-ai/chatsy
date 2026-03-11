@@ -1,3 +1,4 @@
+import { API_URL } from './constants.js';
 import { log } from './utils.js';
 
 export function createIframe(instance) {
@@ -27,13 +28,16 @@ export function createIframe(instance) {
   // Iframe
   const params = new URLSearchParams({
     agentId: instance._agentId,
-    endUserId: instance._options.endUserId || '',
     settings: JSON.stringify(instance._options.settings),
+    user: JSON.stringify(instance._options.user),
+    context: JSON.stringify(instance._options.context),
   });
+
+  const baseUrl = instance._options._embedUrl || API_URL;
 
   const iframe = document.createElement('iframe');
   iframe.id = instance._instanceId + '-iframe';
-  iframe.src = `${instance._options.apiUrl}/chat/embed?${params.toString()}`;
+  iframe.src = `${baseUrl}/chat/embed?${params.toString()}`;
   iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups');
   iframe.setAttribute('allow', 'clipboard-write');
 
@@ -66,8 +70,9 @@ export function postToIframe(instance, type, payload) {
     return;
   }
 
+  const targetOrigin = instance._options._embedUrl || API_URL;
   instance._iframe.contentWindow.postMessage(
     { type, instanceId: instance._instanceId, payload },
-    instance._options.apiUrl,
+    targetOrigin,
   );
 }

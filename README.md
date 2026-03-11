@@ -61,7 +61,8 @@ const chat = new Chatsy('YOUR_AGENT_ID');
 | `data-button-position` | `bottom-right` | `bottom-right` or `bottom-left` |
 | `data-button-type` | `round` | Button shape: `round` or `square` |
 | `data-button-icon` | `default` | Icon style: `default`, `material`, or `rounded` |
-| `data-end-user-id` | *auto-generated* | Unique ID for the end user |
+
+> **Note:** User data (`user`, `context`) is not supported via script tag attributes. Use the JavaScript API with `setUser()` for dynamic user identification.
 
 ### JavaScript Options
 
@@ -76,7 +77,19 @@ const chat = new Chatsy('YOUR_AGENT_ID', {
       icon: 'default',            // 'default', 'material', or 'rounded'
     },
   },
-  endUserId: 'user-123',          // Optional: identify the end user
+  user: {
+    id: 'user-123',               // Unique user ID
+    firstName: 'Jane',            // First name (avatar initials, sent to AI)
+    lastName: 'Smith',            // Last name (avatar initials, sent to AI)
+    email: 'jane@example.com',    // Sent to AI as context
+    photoURL: 'https://...',      // Profile picture URL (replaces initials avatar)
+    // ...any other scalar fields are sent to the AI
+  },
+  context: {
+    // page.url, page.referrer, page.title are auto-collected
+    tags: ['vip', 'enterprise'],  // Labels for filtering conversations
+    metadata: { planId: 'pro' },  // Arbitrary key/values (scalars only)
+  },
 });
 ```
 
@@ -90,6 +103,7 @@ const chat = new Chatsy('YOUR_AGENT_ID', {
 | `chat.close()` | Close the chat window |
 | `chat.toggle()` | Toggle open/close |
 | `chat.send('Hello!')` | Send a message programmatically |
+| `chat.setUser({ id, firstName, ... })` | Update user identity (e.g., after auth state change) |
 | `chat.getMessages()` | Get all messages as an array |
 | `chat.destroy()` | Remove the widget from the page |
 
@@ -152,7 +166,7 @@ npm test         # Run tests
 
 ### Local Testing
 
-Open `test/browser.html` in your browser to test the widget. Set the `data-api-url` attribute to point to your local backend if needed.
+Open `test/browser.html` in your browser to test the widget locally.
 
 ## License
 

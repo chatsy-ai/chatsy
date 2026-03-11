@@ -24,6 +24,17 @@ class Chatsy {
     this._options = deepMerge(DEFAULTS, options);
     this._button_ = this._options.settings.button;
     this._instanceId = `chatsy-${++instanceCounter}`;
+
+    // Auto-collect parent page context (NPM widget runs on customer's page)
+    if (IS_BROWSER) {
+      this._options.context = deepMerge({
+        page: {
+          url: window.location.href,
+          referrer: document.referrer,
+          title: document.title,
+        },
+      }, this._options.context);
+    }
     this._isOpen = false;
     this._ready = false;
     this._messages = [];
@@ -121,6 +132,15 @@ class Chatsy {
     }
   }
 
+  setUser(user) {
+    this._options.user = user || {};
+
+    // If iframe is ready, push the update immediately
+    if (this._ready) {
+      postToIframe(this, 'chatsy:update', { user: this._options.user });
+    }
+  }
+
   send(message) {
     if (!message || typeof message !== 'string') {
       return;
@@ -205,8 +225,6 @@ function autoInit() {
           icon: script.getAttribute('data-button-icon') || undefined,
         },
       },
-      endUserId: script.getAttribute('data-end-user-id') || undefined,
-      apiUrl: script.getAttribute('data-api-url') || undefined,
     });
 
     Chatsy._instances.push(instance);
