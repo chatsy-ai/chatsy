@@ -1,6 +1,6 @@
 {
   "name": "chatsy",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Embeddable AI chatbot widget. Add a chat widget to any website with one line of code.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
