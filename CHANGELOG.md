@@ -15,6 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `Security` in case of vulnerabilities.
 
 ---
+## [2.0.5] - 2026-03-11
+### Added
+- Notification badge on chat button with spring entrance animation
+- Periodic pop animation every 10s to draw user attention
+- Badge auto-dismisses with scale-out animation when chat is opened
+
+---
 ## [2.0.4] - 2026-03-11
 ### BREAKING
 - Replaced `endUserId` option with rich `user` object (`id`, `firstName`, `lastName`, `email`, `photoURL`, plus arbitrary fields)

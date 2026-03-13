@@ -18,6 +18,21 @@ export function createButton(instance) {
         80% { opacity: 1; transform: translateY(-5px); }
         100% { transform: translateY(0); }
       }
+      @keyframes chatsy-badge-in {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.3); }
+        70% { transform: scale(0.9); }
+        100% { transform: scale(1); }
+      }
+      @keyframes chatsy-badge-pop {
+        0%, 100% { transform: scale(1); }
+        40% { transform: scale(1.4); }
+        60% { transform: scale(0.9); }
+      }
+      @keyframes chatsy-badge-out {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(0); opacity: 0; }
+      }
     `;
     document.head.appendChild(style);
   }
@@ -31,6 +46,7 @@ export function createButton(instance) {
 
   Object.assign(btn.style, {
     position: 'fixed',
+    overflow: 'visible',
     bottom: '20px',
     [isLeft ? 'left' : 'right']: '20px',
     width: '60px',
@@ -82,9 +98,65 @@ export function createButton(instance) {
     }
   });
 
+  // Notification badge
+  const badge = document.createElement('div');
+  Object.assign(badge.style, {
+    position: 'absolute',
+    top: '-4px',
+    right: '-4px',
+    width: '22px',
+    height: '22px',
+    borderRadius: '50%',
+    backgroundColor: '#EF4444',
+    color: '#FFFFFF',
+    fontSize: '12px',
+    fontWeight: '700',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    lineHeight: '1',
+    border: '2px solid #FFFFFF',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+    transform: 'scale(0)',
+    pointerEvents: 'none',
+  });
+  badge.textContent = '1';
+  btn.appendChild(badge);
+  instance._badge = badge;
+
+  // Animate badge in after button entrance finishes
+  setTimeout(() => {
+    if (instance._badge && !instance._isOpen) {
+      badge.style.animation = 'chatsy-badge-in 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+
+      // Periodic pop to draw attention
+      instance._badgeInterval = setInterval(() => {
+        if (!instance._badge) {
+          clearInterval(instance._badgeInterval);
+          return;
+        }
+        badge.style.animation = 'none';
+        badge.offsetHeight; // force reflow
+        badge.style.animation = 'chatsy-badge-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+      }, 10000);
+    }
+  }, 2000);
+
   document.body.appendChild(btn);
   instance._button = btn;
   log('Button created', { position: btn_.position, type: btn_.type, icon: btn_.icon });
+}
+
+export function hideBadge(instance) {
+  if (!instance._badge) {
+    return;
+  }
+  clearInterval(instance._badgeInterval);
+  instance._badge.style.animation = 'chatsy-badge-out 200ms ease-in forwards';
+  const badge = instance._badge;
+  instance._badge = null;
+  setTimeout(() => badge.remove(), 200);
 }
 
 export function updateButtonIcon(instance, isClose) {

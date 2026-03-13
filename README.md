@@ -18,6 +18,8 @@
   <strong>Chatsy</strong> is an embeddable AI chatbot widget. Add intelligent customer support to any website with one line of code.
 </p>
 
+# Free AI customer service chatbot agent
+
 ## Quick Start
 
 ### 1. Create an Agent

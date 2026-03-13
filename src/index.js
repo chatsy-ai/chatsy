@@ -7,7 +7,7 @@
 
 import { VERSION, IS_BROWSER, DEFAULTS } from './lib/constants.js';
 import { deepMerge, log, logWarn } from './lib/utils.js';
-import { createButton, updateButtonIcon } from './lib/button.js';
+import { createButton, updateButtonIcon, hideBadge } from './lib/button.js';
 import { createIframe, postToIframe } from './lib/iframe.js';
 import { emit, onMessage } from './lib/events.js';
 
@@ -72,6 +72,9 @@ class Chatsy {
     }
 
     log('Opening chat');
+
+    // Hide notification badge
+    hideBadge(this);
 
     // Lazy-create iframe on first open
     if (!this._iframe) {
