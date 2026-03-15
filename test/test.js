@@ -2,7 +2,7 @@ const pkg = require('../package.json');
 const assert = require('assert');
 
 describe(`${pkg.name} v${pkg.version}`, () => {
-  const Chatsy = require('../dist/index.js').Chatsy || require('../dist/index.js').default || require('../dist/index.js');
+  const Chatsy = require('../dist/index.js').default;
 
   // ── Constructor ──────────────────────────────────────────────────────
   describe('constructor', () => {
