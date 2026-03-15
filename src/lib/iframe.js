@@ -1,4 +1,4 @@
-import { API_URL } from './constants.js';
+import { API_URL, VERSION } from './constants.js';
 import { log } from './utils.js';
 
 export function createIframe(instance) {
@@ -26,18 +26,17 @@ export function createIframe(instance) {
   instance._overlay = overlay;
 
   // Iframe
-  const params = new URLSearchParams({
-    agentId: instance._agentId,
-    settings: JSON.stringify(instance._options.settings),
-    user: JSON.stringify(instance._options.user),
-    context: JSON.stringify(instance._options.context),
-  });
-
   const baseUrl = instance._options._embedUrl || API_URL;
+  const url = new URL('/chat/embed', baseUrl);
+  url.searchParams.set('agentId', instance._agentId);
+  url.searchParams.set('version', VERSION);
+  url.searchParams.set('settings', JSON.stringify(instance._options.settings));
+  url.searchParams.set('user', JSON.stringify(instance._options.user));
+  url.searchParams.set('context', JSON.stringify(instance._options.context));
 
   const iframe = document.createElement('iframe');
   iframe.id = instance._instanceId + '-iframe';
-  iframe.src = `${baseUrl}/chat/embed?${params.toString()}`;
+  iframe.src = url.toString();
   iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups');
   iframe.setAttribute('allow', 'clipboard-write');
 

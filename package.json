@@ -1,9 +1,17 @@
 {
   "name": "chatsy",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Embeddable AI chatbot widget. Add a chat widget to any website with one line of code.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
+  "scripts": {
+    "start": "npm run prepare:watch",
+    "build": "node -e \"require('prepare-package')()\"",
+    "prepare": "node -e \"require('prepare-package')()\"",
+    "test": "npm run build && mocha test/ --recursive --timeout=10000",
+    "prepare:watch": "node -e \"require('prepare-package/watch')()\"",
+    "open": "open test/browser.html"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -13,11 +21,22 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "start": "node build.js --watch",
-    "build": "node build.js",
-    "prepare": "npm run build",
-    "test": "npm run build && mocha test/ --recursive --timeout=10000"
+  "preparePackage": {
+    "input": "src",
+    "output": "dist",
+    "type": "bundle",
+    "build": {
+      "formats": [
+        "esm",
+        "cjs",
+        "iife"
+      ],
+      "iife": {
+        "globalName": "Chatsy",
+        "fileName": "chatsy.min.js"
+      }
+    },
+    "replace": {}
   },
   "engines": {
     "node": ">=16"
@@ -41,8 +60,8 @@
   },
   "homepage": "https://chatsy.ai",
   "devDependencies": {
-    "esbuild": "^0.27.3",
-    "mocha": "^11.7.5"
+    "mocha": "^11.7.5",
+    "prepare-package": "^2.0.3"
   },
   "dependencies": {
     "itwcw-package-analytics": "^1.0.8"

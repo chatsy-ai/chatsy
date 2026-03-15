@@ -34,25 +34,25 @@ describe(`${pkg.name} v${pkg.version}`, () => {
       assert.strictEqual(chat._options.settings.button.textColor, '#FFFFFF');
       assert.strictEqual(chat._options.settings.button.position, 'bottom-right');
       assert.strictEqual(chat._options.settings.button.type, 'round');
-      assert.strictEqual(chat._options.endUserId, '');
-      assert.strictEqual(chat._options.apiUrl, 'https://chatsy.ai');
+      assert.deepStrictEqual(chat._options.user, {});
+      assert.deepStrictEqual(chat._options.context, {});
     });
 
     it('should override options', () => {
       const chat = new Chatsy('test-agent', {
         settings: { button: { backgroundColor: '#FF0000', position: 'bottom-left' } },
-        endUserId: 'user-42',
+        user: { id: 'user-42' },
       });
       assert.strictEqual(chat._options.settings.button.backgroundColor, '#FF0000');
       assert.strictEqual(chat._options.settings.button.position, 'bottom-left');
-      assert.strictEqual(chat._options.endUserId, 'user-42');
+      assert.strictEqual(chat._options.user.id, 'user-42');
     });
 
     it('should keep defaults for options not overridden', () => {
       const chat = new Chatsy('test-agent', { settings: { button: { backgroundColor: '#FF0000' } } });
       assert.strictEqual(chat._options.settings.button.textColor, '#FFFFFF');
       assert.strictEqual(chat._options.settings.button.position, 'bottom-right');
-      assert.strictEqual(chat._options.apiUrl, 'https://chatsy.ai');
+      assert.deepStrictEqual(chat._options.user, {});
     });
 
     it('should assign unique instance IDs', () => {
@@ -405,8 +405,8 @@ describe(`${pkg.name} v${pkg.version}`, () => {
 
   // ── Origin validation ────────────────────────────────────────────────
   describe('origin validation', () => {
-    it('should accept custom apiUrl origin', () => {
-      const chat = new Chatsy('test-agent', { apiUrl: 'https://custom.example.com' });
+    it('should accept custom _embedUrl origin', () => {
+      const chat = new Chatsy('test-agent', { _embedUrl: 'https://custom.example.com' });
       let called = false;
       chat.on('ready', () => { called = true; });
       chat._onMessage({
@@ -417,7 +417,7 @@ describe(`${pkg.name} v${pkg.version}`, () => {
     });
 
     it('should reject non-matching custom origin', () => {
-      const chat = new Chatsy('test-agent', { apiUrl: 'https://custom.example.com' });
+      const chat = new Chatsy('test-agent', { _embedUrl: 'https://custom.example.com' });
       let called = false;
       chat.on('ready', () => { called = true; });
       chat._onMessage({
@@ -427,8 +427,8 @@ describe(`${pkg.name} v${pkg.version}`, () => {
       assert.strictEqual(called, false);
     });
 
-    it('should always allow localhost regardless of apiUrl', () => {
-      const chat = new Chatsy('test-agent', { apiUrl: 'https://custom.example.com' });
+    it('should always allow localhost regardless of _embedUrl', () => {
+      const chat = new Chatsy('test-agent', { _embedUrl: 'https://custom.example.com' });
       let called = false;
       chat.on('ready', () => { called = true; });
       chat._onMessage({

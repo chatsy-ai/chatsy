@@ -1,4 +1,4 @@
-import { API_URL } from './constants.js';
+import { API_URL, VERSION } from './constants.js';
 import { log, logError } from './utils.js';
 import { postToIframe } from './iframe.js';
 
@@ -35,6 +35,7 @@ export function onMessage(instance, event) {
       // Send init config to iframe
       postToIframe(instance, 'chatsy:init', {
         agentId: instance._agentId,
+        version: VERSION,
         settings: instance._options.settings,
         user: instance._options.user,
         context: instance._options.context,

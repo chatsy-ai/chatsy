@@ -15,6 +15,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `Security` in case of vulnerabilities.
 
 ---
+## [2.0.7] - 2026-03-14
+### Changed
+- Replaced custom esbuild `build.js` with `prepare-package` build system
+- Build config now lives in `package.json` under `preparePackage` key
+- Iframe URL construction uses `new URL()` instead of string concatenation
+
+### Added
+- Widget version is now passed to the embed iframe via URL params and `chatsy:init` postMessage
+
+### Removed
+- Deleted `build.js` (replaced by `prepare-package`)
+- Removed `esbuild` dev dependency
+
+---
 ## [2.0.5] - 2026-03-11
 ### Added
 - Notification badge on chat button with spring entrance animation
